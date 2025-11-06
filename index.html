@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-cn" class="mdui-theme-auto">
+    <head>
+      <script type="module" crossorigin src="/assets/polyfills-D-RxcSEH.js"></script>
+
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/icon" href="/favicon.ico" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=contain"
+        />
+        <link rel="stylesheet" href="/MaterialIcons/regular.css" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="stylesheet" href="//res-cf.realtvop.top/mdui/fonts/roboto.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1f" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fefbff" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="description" content="SaltNet: 舞萌DX查分器" />
+        <meta name="keyword" content="舞萌DX, 水鱼, b50" />
+        <meta name="author" content="realtvop" />
+        <title>舞萌DX收藏品查询</title>
+        <script>
+            window.spec = {
+                currentVersionBuildTime: "1762408308671",
+            };
+        </script>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MSZDDD7P09"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MSZDDD7P09");
+        </script>
+      <script type="module" crossorigin src="/assets/index-XGMiXKfZ.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-HimWu37E.css">
+      <script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>
+      <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+    </head>
+    <body>
+        <div id="rescue" style="height: 0">
+            <a
+                href="javascript:void(0)"
+                onclick="event.preventDefault();(async()=>{if('caches' in window){const cacheName='SaltNetv0-Main';try{const hasCache=await caches.has(cacheName);if(hasCache){await caches.delete(cacheName);console.log(`Cache &quot;${cacheName}&quot; cleared.`);}}catch(e){console.error('Rescue error:',e);}}location.reload();})()"
+            >
+                救砖
+            </a>
+        </div>
+        <div id="app"></div>
+        <script>
+            if (
+                [80, 443, 1443, "1443", "", "1145"].includes(location.port) ||
+                location.hostname == "saltnet-cachedev.localhost"
+            )
+                navigator.serviceWorker
+                    .register("/sw.js", { scope: "/" })
+                    .then(reg => console.log("SW_Reg_Success: ", reg.scope))
+                    .catch(err => console.log("SW_Reg_Failed: ", err));
+        </script>
+      <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+      <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy-BCw3_KoB.js"></script>
+      <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/index-legacy-Dx9Ie02N.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+    </body>
+</html>
