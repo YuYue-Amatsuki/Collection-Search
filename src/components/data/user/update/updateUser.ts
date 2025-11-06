@@ -6,7 +6,6 @@ import UpdateUserWorker from "./updateUser.worker.ts?worker&inline";
 
 const updateUserWorker = new UpdateUserWorker();
 
-
 const pendingUsers: { [key: string]: User } = {};
 
 export function updateUserWithWorker(user: User, updateItem: boolean = false) {

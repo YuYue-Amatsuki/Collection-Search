@@ -186,7 +186,8 @@
     // 监听分类变化，重置虚拟滚动并滚动到顶部（移除拥有状态相关重置）
     watch(category, () => {
         visibleItemsCount.value = getLoadSize();
-        if (filter.value !== "all" && !availableGenres.value.includes(filter.value)) filter.value = "all";
+        if (filter.value !== "all" && !availableGenres.value.includes(filter.value))
+            filter.value = "all";
         // 滚动到顶部
         const container = document.querySelector(".collections-container");
         if (container) {
