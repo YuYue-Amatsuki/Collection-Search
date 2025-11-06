@@ -14,12 +14,12 @@
     import { copyTextToClipboard } from "@/components/app/utils";
 
     const Category = {
-        Title: "称号（2）",
-        Icon: "头像（3）",
-        Plate: "姓名框（1）",
-        Frame: "背景（11）",
-        Character: "旅行伙伴（9）",
-        Partner: "搭档（10）",
+        Title: "称号(2)",
+        Icon: "头像(3)",
+        Plate: "姓名框(1)",
+        Frame: "背景(11)",
+        Character: "旅行伙伴(9)",
+        Partner: "搭档(10)",
     } as const;
 
     type CategoryType = (typeof Category)[keyof typeof Category];
