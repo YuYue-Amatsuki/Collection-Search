@@ -16,26 +16,6 @@
 
 <template>
     <mdui-layout>
-        <mdui-navigation-bar :value="route.path" label-visibility="labeled">
-            <mdui-navigation-bar-item
-                icon="collections"
-                value="/collections"
-                @click="goCollections"
-            >
-                收藏品
-            </mdui-navigation-bar-item>
-        </mdui-navigation-bar>
-
-        <mdui-navigation-rail :value="route.path">
-            <mdui-navigation-rail-item
-                icon="collections"
-                value="/collections"
-                @click="goCollections"
-            >
-                收藏品
-            </mdui-navigation-rail-item>
-        </mdui-navigation-rail>
-
         <mdui-layout-main class="app-container">
             <router-view v-slot="{ Component }">
                 <component :is="Component" :key="route.path" />
