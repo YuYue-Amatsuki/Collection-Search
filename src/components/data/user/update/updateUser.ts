@@ -1,50 +1,11 @@
 import type { User } from "@/components/data/user/type";
-import { snackbar, alert } from "mdui";
-import { markDialogOpen, markDialogClosed } from "@/components/app/router.vue";
+// import { snackbar, alert } from "mdui";
+// import { markDialogOpen, markDialogClosed } from "@/components/app/router.vue";
 // @ts-ignore
 import UpdateUserWorker from "./updateUser.worker.ts?worker&inline";
 
 const updateUserWorker = new UpdateUserWorker();
-updateUserWorker.onmessage = (event: MessageEvent) => {
-    const { type } = event.data;
-    if (type === "snackbar") {
-        const { message, errorMsg } = event.data.data;
-        snackbar({
-            message,
-            placement: "bottom",
-            autoCloseDelay: errorMsg ? 3000 : 1500,
-            action: errorMsg ? "复制错误" : undefined,
-            onActionClick: errorMsg ? () => navigator.clipboard.writeText(errorMsg) : undefined,
-        });
-    } else if (type.startsWith("updateUserResult::")) {
-        const { result: data } = event.data;
-        if (data) {
-            const user = pendingUsers[type.slice(18)];
 
-            user.data = { ...user.data, ...data };
-            if (
-                user.inGame.id &&
-                typeof user.inGame.id === "number" &&
-                user.inGame.id.toString().length === 8
-            )
-                user.inGame.name = data.name;
-        }
-    } else if (type === "alert") {
-        alert({
-            ...event.data.data,
-            onOpen: dialog => {
-                markDialogOpen(dialog);
-                // 允许 description 换行显示
-                (
-                    (dialog.shadowRoot as unknown as HTMLElement).querySelector(
-                        "div.panel.has-description > div > slot.description"
-                    ) as HTMLElement
-                ).style.whiteSpace = "pre-wrap";
-            },
-            onClose: markDialogClosed,
-        });
-    } else console.log(type, event.data);
-};
 
 const pendingUsers: { [key: string]: User } = {};
 

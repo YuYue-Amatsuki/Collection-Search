@@ -1,7 +1,7 @@
 {
-  "name": "SaltNet",
-  "short_name": "SaltNet",
-  "description": "SaltNet - Maimai player information platform",
+  "name": "舞萌DX收藏品查询",
+  "short_name": "收藏品查询",
+  "description": "舞萌DX - Maimai player information platform",
   "start_url": "/",
   "display": "standalone",
   "icons": [

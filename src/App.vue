@@ -1,101 +1,35 @@
 <script setup lang="ts">
-    import { ref, provide } from "vue";
-    import { useRoute, useRouter } from "vue-router";
-    import TopAppBar from "./components/app/TopAppBar.vue";
+import { useRoute, useRouter } from "vue-router";
 
-    const playerInfo = ref({
-        name: "",
-        data: null as any,
-    });
+const route = useRoute();
+const router = useRouter();
 
-    provide("playerInfo", playerInfo);
-    const route = useRoute();
-    const router = useRouter();
-
-    function handleSongsNavigation() {
-        if (route.path === "/songs") {
-            const searchInput = document.getElementById("search-input");
-            if (searchInput) {
-                searchInput.focus();
-            }
-        } else {
-            router.push("/songs");
-        }
+function goCollections() {
+    if (route.path === "/collections") {
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) searchInput.focus();
+    } else {
+        router.push("/collections");
     }
+}
 </script>
 
 <template>
     <mdui-layout>
-        <component :is="TopAppBar" :playerInfo="playerInfo" v-if="route.path !== '/b50/render'" />
         <mdui-navigation-bar
             :value="route.path"
-            v-if="!route.path.startsWith('/b50/') && !route.path.startsWith('/songs/')"
             label-visibility="labeled"
         >
-            <mdui-navigation-bar-item icon="home" value="/" @click="router.push('/')">
-                首页
-            </mdui-navigation-bar-item>
-            <mdui-navigation-bar-item
-                icon="data_thresholding"
-                value="/b50"
-                @click="router.push('/b50')"
-            >
-                B50
-            </mdui-navigation-bar-item>
-            <mdui-navigation-bar-item
-                icon="library_music"
-                value="/songs"
-                @click="handleSongsNavigation"
-            >
-                谱面
-            </mdui-navigation-bar-item>
-            <mdui-navigation-bar-item
-                icon="collections"
-                value="/collections"
-                @click="router.push('/collections')"
-            >
-                藏品
-            </mdui-navigation-bar-item>
-            <mdui-navigation-bar-item icon="people" value="/users" @click="router.push('/users')">
-                用户
-            </mdui-navigation-bar-item>
-            <mdui-navigation-bar-item icon="info" value="/about" @click="router.push('/about')">
-                关于
+            <mdui-navigation-bar-item icon="collections" value="/collections" @click="goCollections">
+                收藏品
             </mdui-navigation-bar-item>
         </mdui-navigation-bar>
+
         <mdui-navigation-rail
             :value="route.path"
-            v-if="!route.path.startsWith('/b50/') && !route.path.startsWith('/songs/')"
         >
-            <mdui-navigation-rail-item icon="home" value="/" @click="router.push('/')">
-                首页
-            </mdui-navigation-rail-item>
-            <mdui-navigation-rail-item
-                icon="data_thresholding"
-                value="/b50"
-                @click="router.push('/b50')"
-            >
-                B50
-            </mdui-navigation-rail-item>
-            <mdui-navigation-rail-item
-                icon="library_music"
-                value="/songs"
-                @click="handleSongsNavigation"
-            >
-                谱面
-            </mdui-navigation-rail-item>
-            <mdui-navigation-rail-item
-                icon="collections"
-                value="/collections"
-                @click="router.push('/collections')"
-            >
-                藏品
-            </mdui-navigation-rail-item>
-            <mdui-navigation-rail-item icon="people" value="/users" @click="router.push('/users')">
-                用户
-            </mdui-navigation-rail-item>
-            <mdui-navigation-rail-item icon="info" value="/about" @click="router.push('/about')">
-                关于
+            <mdui-navigation-rail-item icon="collections" value="/collections" @click="goCollections">
+                收藏品
             </mdui-navigation-rail-item>
         </mdui-navigation-rail>
 
@@ -108,106 +42,39 @@
 </template>
 
 <style scoped>
-    .app-container {
-        padding: 16px;
-        box-sizing: border-box;
-        height: 100%;
-        overflow-y: auto;
-    }
+.app-container {
+    padding: 16px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+}
 
-    mdui-navigation-bar,
-    mdui-navigation-rail {
-        position: fixed !important;
-        -webkit-tap-highlight-color: transparent;
-    }
+mdui-navigation-bar,
+mdui-navigation-rail {
+    position: fixed !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+mdui-navigation-bar {
+    height: var(--nav-bar-height);
+    padding-bottom: var(--nav-bar-padding-bottom);
+}
+
+mdui-navigation-rail {
+    display: none;
+}
+@media (min-aspect-ratio: 1.001/1) {
     mdui-navigation-bar {
-        height: var(--nav-bar-height);
-        padding-bottom: var(--nav-bar-padding-bottom);
-    }
-
-    mdui-navigation-rail-item {
-        overflow: hidden;
-    }
-    mdui-navigation-bar-item {
-        overflow: hidden;
-    }
-
-    mdui-navigation-rail {
         display: none;
     }
-    @media (min-aspect-ratio: 1.001/1) {
-        mdui-navigation-bar {
-            display: none;
-        }
-        mdui-navigation-rail {
-            display: block !important;
-        }
+    mdui-navigation-rail {
+        display: block !important;
     }
-
-    .player-info-bar {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .player-rating-chip {
-        margin-left: 4px;
-        transform: scale(0.9);
-    }
-
-    .favorite-icon-button {
-        margin-left: 4px;
-    }
-
-    .search-actions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .search-field {
-        min-width: 150px;
-    }
-
-    @media (max-width: 600px) {
-        .search-field {
-            min-width: 120px;
-        }
-        .player-info-bar {
-            gap: 4px;
-        }
-    }
+}
 </style>
 
 <style>
-    body {
-        margin: 0;
-    }
-
-    #app {
-        width: 100%;
-        min-height: 100vh;
-        display: block;
-        overflow: hidden;
-    }
-
-    button {
-        padding: initial;
-        border: initial;
-        background: initial;
-        font-family: initial;
-        font-size: initial;
-        font-weight: initial;
-        border-radius: initial;
-        cursor: initial;
-        transition: initial;
-        color: initial;
-    }
-    button:hover {
-        border-color: initial;
-    }
-    button:focus,
-    button:focus-visible {
-        outline: initial;
-    }
+body { margin: 0; }
+#app { width: 100%; min-height: 100vh; display: block; overflow: hidden; }
+button { padding: initial; border: initial; background: initial; font-family: initial; font-size: initial; font-weight: initial; border-radius: initial; cursor: initial; transition: initial; color: initial; }
 </style>

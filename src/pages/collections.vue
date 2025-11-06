@@ -14,12 +14,12 @@
     import { copyTextToClipboard } from "@/components/app/utils";
 
     const Category = {
-        Title: "称号",
-        Icon: "头像",
-        Plate: "姓名框",
-        Frame: "背景",
-        Character: "旅行伙伴",
-        Partner: "搭档",
+        Title: "称号（2）",
+        Icon: "头像（3）",
+        Plate: "姓名框（1）",
+        Frame: "背景（11）",
+        Character: "旅行伙伴（9）",
+        Partner: "搭档（10）",
     } as const;
 
     type CategoryType = (typeof Category)[keyof typeof Category];
@@ -27,6 +27,7 @@
     const { users } = useShared();
     const query = ref<string>("");
     const category = ref<CategoryType>(Category.Title);
+    // 保留为string类型，默认'all'
     const filter = ref<string>("all");
     const ownedCollections = computed<Record<number, number[]>>(() => {
         if (!users || !users[0] || !users[0].data.items)
@@ -98,7 +99,7 @@
         }
     });
 
-    // 过滤后的收藏品列表
+    // 过滤后的收藏品列表（去除拥有状态相关过滤，仅保留按类别/关键词过滤）
     const filteredCollections = computed<Collection[]>(() => {
         let result = collections.value;
 
@@ -114,21 +115,12 @@
             );
         }
 
-        // 根据筛选器过滤（包括拥有状态和类别）
+        // 根据筛选器过滤（只剩类别筛选与'all'）
         if (filter.value !== "all") {
-            if (filter.value === "owned" || filter.value === "missing") {
-                // 拥有状态筛选
-                result = result.filter(item => {
-                    const isOwned = isCollectionOwned(item);
-                    return filter.value === "owned" ? isOwned : !isOwned;
-                });
-            } else {
-                // 类别筛选
-                result = result.filter(item => {
-                    const itemGenre = item.genre || (item as any).genre;
-                    return itemGenre === filter.value;
-                });
-            }
+            result = result.filter(item => {
+                const itemGenre = item.genre || (item as any).genre;
+                return itemGenre === filter.value;
+            });
         }
 
         return result;
@@ -191,10 +183,10 @@
         visibleItemsCount.value = Math.max(newVisibleCount, getLoadSize());
     };
 
-    // 监听分类变化，重置虚拟滚动并滚动到顶部
+    // 监听分类变化，重置虚拟滚动并滚动到顶部（移除拥有状态相关重置）
     watch(category, () => {
         visibleItemsCount.value = getLoadSize();
-        if (!["all", "owned", "missing"].includes(filter.value)) filter.value = "all"; // 重置筛选器
+        if (filter.value !== "all" && !availableGenres.value.includes(filter.value)) filter.value = "all";
         // 滚动到顶部
         const container = document.querySelector(".collections-container");
         if (container) {
@@ -298,15 +290,7 @@
 
     function handleFilterChange(event: Event) {
         const target = event.target as HTMLSelectElement;
-
-        if (target.value) filter.value = target.value;
-        else {
-            // 阻止点击已经选择的项目时清空项目
-            const previousValue = filter.value;
-            filter.value = target.value;
-            filter.value = previousValue;
-            // wtf
-        }
+        filter.value = target.value || "all";
     }
 </script>
 
@@ -327,8 +311,6 @@
             style="--mdui-comp-select-menu-max-height: 60vh"
         >
             <mdui-menu-item value="all">所有</mdui-menu-item>
-            <mdui-menu-item value="owned">已获得</mdui-menu-item>
-            <mdui-menu-item value="missing">未获得</mdui-menu-item>
             <mdui-divider v-if="availableGenres.length"></mdui-divider>
             <mdui-menu-item v-for="genre in availableGenres" :key="genre" :value="genre">
                 {{ genre }}
