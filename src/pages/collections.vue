@@ -330,8 +330,8 @@
                 style="--mdui-comp-select-menu-max-height: 60vh"
             >
                 <mdui-menu-item value="all">所有</mdui-menu-item>
-                <mdui-menu-item value="owned">已获得</mdui-menu-item>
-                <mdui-menu-item value="missing">未获得</mdui-menu-item>
+                <!-- <mdui-menu-item value="owned">已获得</mdui-menu-item> -->
+                <!-- <mdui-menu-item value="missing">未获得</mdui-menu-item> -->
                 <mdui-divider v-if="availableGenres.length"></mdui-divider>
                 <mdui-menu-item v-for="genre in availableGenres" :key="genre" :value="genre">
                     {{ genre }}
