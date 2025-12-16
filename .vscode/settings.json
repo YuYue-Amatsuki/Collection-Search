@@ -6,5 +6,7 @@
     "editor.detectIndentation": false,
     "typescript.tsdk": "node_modules/typescript/lib",
     "volar.checkVueTsc": true,
-    "js/ts.implicitProjectConfig.checkJs": false
+    "js/ts.implicitProjectConfig.checkJs": false,
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
 }
