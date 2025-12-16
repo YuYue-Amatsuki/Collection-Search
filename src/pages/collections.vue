@@ -550,7 +550,7 @@
 
     .category-tabs {
         position: fixed;
-        top: 56px;
+        top: 0; /* 从 56px 改为 0，因为没有 app-bar 了 */
         left: 0;
         right: 0;
         z-index: 100;
@@ -562,13 +562,13 @@
 
     @media (min-aspect-ratio: 1.001/1) {
         .category-tabs {
-            left: 80px; /* navigation rail width */
+            left: 0; /* 从 80px 改为 0，因为没有导航栏了 */
         }
     }
 
     .filter-bar {
         position: fixed;
-        top: calc(56px + 48px);
+        top: 48px; /* 从 calc(56px + 48px) 改为 48px，因为没有 app-bar 了 */
         left: 0;
         right: 0;
         z-index: 99;
@@ -584,7 +584,7 @@
 
     @media (min-aspect-ratio: 1.001/1) {
         .filter-bar {
-            left: 80px; /* navigation rail width */
+            left: 0; /* 从 80px 改为 0，因为没有导航栏了 */
         }
     }
 
@@ -609,13 +609,7 @@
     .collections-container {
         padding: 5px 20px;
         min-height: 50vh;
-        padding-bottom: calc(56px + 1rem);
-    }
-
-    @media (min-aspect-ratio: 1.001/1) {
-        .collections-container {
-            padding-bottom: 1rem;
-        }
+        padding-bottom: 1rem; /* 从 calc(56px + 1rem) 改为 1rem，因为没有 app-bar 了 */
     }
 
     .collections-grid {
@@ -852,7 +846,6 @@
     .character-stats {
         display: flex;
         flex-wrap: wrap;
-        /* gap: 8px; */
         align-items: center;
     }
 
@@ -866,7 +859,6 @@
         display: flex;
         align-items: center;
         gap: 2px;
-        /* margin-top: 4px; */
     }
 
     .awakening-star {
