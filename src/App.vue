@@ -50,7 +50,7 @@
             display: none;
         }
         mdui-navigation-rail {
-            display: block !important;
+            display: none !important;
         }
     }
 </style>
