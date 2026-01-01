@@ -46,8 +46,16 @@ html {
     overscroll-behavior-y: none;
 }
 
+@font-face {
+  font-family: 'WenYuan Rounded';
+  src: url('/public/fonts/WenYuanRoundedSC-Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* 优化加载显示 */
+}
+
 body {
-    font-family: "Roboto", "Noto Sans SC" !important;
+    font-family: "Quicksand", "Kosugi Maru", "WenYuan Rounded", "Roboto", "Noto Sans SC" !important;
     margin: 0;
     overscroll-behavior-y: contain;
     overscroll-behavior-x: none;
