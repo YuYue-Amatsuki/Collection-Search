@@ -566,12 +566,12 @@
     }
 
     .collections-page.with-header {
-        padding-top: calc(80px + 48px + 64px); /* site-header + tabs + filter-bar height */
+        padding-top: calc(60px + 48px + 64px); /* site-header + tabs + filter-bar height */
     }
 
     .category-tabs {
         position: fixed;
-        top: 80px; /* site-header height */
+        top: 60px; /* site-header height */
         left: 0;
         right: 0;
         z-index: 100;
@@ -589,7 +589,7 @@
 
     .filter-bar {
         position: fixed;
-        top: calc(80px + 48px); /* 从 48px 改为 calc(80px + 48px)，因为有 site-header */
+        top: calc(60px + 48px); /* 从 48px 改为 calc(60px + 48px)，因为有 site-header */
         left: 0;
         right: 0;
         z-index: 99;
@@ -1006,7 +1006,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        height: 80px;
+        height: 60px;
         box-sizing: border-box;
         transition: transform 0.3s ease;
     }
@@ -1022,22 +1022,22 @@
     }
 
     .site-logo {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         border-radius: 8px;
         object-fit: contain;
     }
 
     .site-title {
         margin: 0;
-        font-size: 24px;
+        font-size: 16px;
         font-weight: 600;
         color: rgb(var(--mdui-color-on-background));
     }
 
     .site-subtitle {
         margin: 0;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 400;
         color: rgb(var(--mdui-color-on-background));
         opacity: 0.7;
