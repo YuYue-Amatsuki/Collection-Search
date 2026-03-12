@@ -5,12 +5,12 @@
     const router = useRouter();
 
     // function goCollections() {
-        if (route.path === "/collections") {
-            const searchInput = document.getElementById("search-input");
-            if (searchInput) searchInput.focus();
-        } else {
-            router.push("/collections");
-        }
+    if (route.path === "/collections") {
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) searchInput.focus();
+    } else {
+        router.push("/collections");
+    }
     //}
 </script>
 

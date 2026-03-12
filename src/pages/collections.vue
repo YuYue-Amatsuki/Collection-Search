@@ -170,17 +170,6 @@
         }
     };
 
-    // 滚动事件处理（使用 window 滚动）
-    const handleScroll = () => {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        // 检查是否接近底部（距离底部200px时触发）
-        if (scrollTop + windowHeight >= documentHeight - 200) {
-            loadMore();
-        }
-    };
-
     // 窗口大小变化处理
     const handleResize = () => {
         const currentItemsPerPage = getLoadSize() / 2; // 单页数量
@@ -193,25 +182,23 @@
         visibleItemsCount.value = Math.max(newVisibleCount, getLoadSize());
     };
 
-    // 监听分类变化，重置虚拟滚动并滚动到顶部
-    watch(category, () => {
-        visibleItemsCount.value = getLoadSize();
-        if (!["all", "owned", "missing"].includes(filter.value)) filter.value = "all"; // 重置筛选器
-        // 滚动到顶部
-        window.scrollTo({ top: 0, behavior: "instant" });
-    });
+    // 滚动方向用于隐藏/显示顶部元素
+    const showHeader = ref(true);
+    let lastScroll = 0;
 
-    // 监听搜索变化，重置虚拟滚动
-    watch(query, () => {
-        visibleItemsCount.value = getLoadSize();
-    });
+    const handleScroll = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        // 显示头部当向上滚动或者靠近顶部
+        showHeader.value = scrollTop < lastScroll || scrollTop < 50;
+        lastScroll = scrollTop;
 
-    // 监听筛选器变化，重置虚拟滚动
-    watch(filter, () => {
-        visibleItemsCount.value = getLoadSize();
-        // 滚动到顶部
-        window.scrollTo({ top: 0, behavior: "instant" });
-    });
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        // 检查是否接近底部（距离底部200px时触发）
+        if (scrollTop + windowHeight >= documentHeight - 200) {
+            loadMore();
+        }
+    };
 
     onMounted(() => {
         visibleItemsCount.value = getLoadSize();
@@ -222,6 +209,26 @@
     onUnmounted(() => {
         window.removeEventListener("resize", handleResize);
         window.removeEventListener("scroll", handleScroll);
+    });
+
+    // 处理筛选切换时重置头部显示，避免直接滚动隐藏状态导致体验不佳
+    watch(category, () => {
+        visibleItemsCount.value = getLoadSize();
+        if (!["all", "owned", "missing"].includes(filter.value)) filter.value = "all"; // 重置筛选器
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: "instant" });
+        showHeader.value = true;
+    });
+
+    watch(query, () => {
+        visibleItemsCount.value = getLoadSize();
+    });
+
+    watch(filter, () => {
+        visibleItemsCount.value = getLoadSize();
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: "instant" });
+        showHeader.value = true;
     });
 
     // 根据称号颜色获取CSS类名
@@ -309,12 +316,20 @@
 </script>
 
 <template>
-    <div class="collections-page">
+    <div class="collections-page" :class="{ 'with-header': showHeader }">
+        <!-- 网站标题和Logo -->
+        <div class="site-header" :class="{ hidden: !showHeader }">
+            <img src="/favicon.png" alt="SaltNet Logo" class="site-logo" />
+            <h1 class="site-title">舞萌DX收藏品查询</h1>
+            <h2 class="site-subtitle">By 雨月丶Amatsuki</h2>
+        </div>
+
         <!-- 主分类选择 - 使用Tab -->
         <mdui-tabs
             :value="category"
             @change="(e: any) => (category = e.target.value)"
             class="category-tabs"
+            :class="{ hidden: !showHeader }"
         >
             <mdui-tab v-for="(label, key) in Category" :key="key" :value="label">
                 {{ label }}
@@ -322,7 +337,7 @@
         </mdui-tabs>
 
         <!-- 搜索框和筛选器 -->
-        <div class="filter-bar">
+        <div class="filter-bar" :class="{ hidden: !showHeader }">
             <mdui-select
                 class="filter-select"
                 :value="filter"
@@ -545,12 +560,18 @@
     }
 
     .collections-page {
+        /* 基本 padding，当头部被隐藏时使用 */
         padding-top: calc(48px + 64px); /* tabs + filter-bar height */
+        transition: padding-top 0.3s ease;
+    }
+
+    .collections-page.with-header {
+        padding-top: calc(80px + 48px + 64px); /* site-header + tabs + filter-bar height */
     }
 
     .category-tabs {
         position: fixed;
-        top: 0; /* 从 56px 改为 0，因为没有 app-bar 了 */
+        top: 80px; /* site-header height */
         left: 0;
         right: 0;
         z-index: 100;
@@ -568,7 +589,7 @@
 
     .filter-bar {
         position: fixed;
-        top: 48px; /* 从 calc(56px + 48px) 改为 48px，因为没有 app-bar 了 */
+        top: calc(80px + 48px); /* 从 48px 改为 calc(80px + 48px)，因为有 site-header */
         left: 0;
         right: 0;
         z-index: 99;
@@ -970,6 +991,61 @@
 
         .collection-card {
             padding: 12px;
+        }
+    }
+
+    /* 网站标题和Logo样式 */
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 101;
+        background: rgb(var(--mdui-color-background));
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 80px;
+        box-sizing: border-box;
+        transition: transform 0.3s ease;
+    }
+
+    .category-tabs,
+    .filter-bar {
+        transition: transform 0.3s ease;
+    }
+
+    /* use a large fixed offset so both tabs and filter-bar slide completely out */
+    .hidden {
+        transform: translateY(-200px);
+    }
+
+    .site-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    .site-title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        color: rgb(var(--mdui-color-on-background));
+    }
+
+    .site-subtitle {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgb(var(--mdui-color-on-background));
+        opacity: 0.7;
+    }
+
+    @media (min-aspect-ratio: 1.001/1) {
+        .site-header {
+            left: 0;
         }
     }
 </style>
