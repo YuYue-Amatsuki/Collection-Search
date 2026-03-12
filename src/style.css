@@ -48,16 +48,16 @@ html {
 
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Kosugi+Maru:wght@400&display=swap");
 
-@font-face {
+/*@font-face {
     font-family: "WenYuan Rounded";
     src: url("/fonts/WenYuanRoundedSC-Medium.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-}
+}*/
 
 body {
-    font-family: "Quicksand", "Kosugi Maru", "WenYuan Rounded", "Roboto", "Noto Sans SC" !important;
+    font-family: "Quicksand", "Kosugi Maru", "JiangChengYuanTi", "Roboto", "Noto Sans SC" !important;
     margin: 0;
     overscroll-behavior-y: contain;
     overscroll-behavior-x: none;
