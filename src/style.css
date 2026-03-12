@@ -58,6 +58,7 @@ html {
 
 body {
     font-family: "Quicksand", "Kosugi Maru", "JiangChengYuanTi", "Roboto", "Noto Sans SC" !important;
+    font-weight: 400;
     margin: 0;
     overscroll-behavior-y: contain;
     overscroll-behavior-x: none;
